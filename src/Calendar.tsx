@@ -1,15 +1,7 @@
 import React, { FC } from "react";
 import cn from "classnames";
 import { weekdays, months } from "./constants";
-
-interface Props {
-  currentYear: string;
-  currentDate: string;
-  weekDay: string;
-  genitiveMonth: string;
-  nominativeMonth: string;
-  final: { date: number; otherMonth: boolean }[];
-}
+import { Props } from "./types";
 
 const Calendar: FC<Props> = ({
   currentYear,

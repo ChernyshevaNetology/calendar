@@ -3,8 +3,9 @@ import "./App.css";
 import { Calendar } from "./Calendar";
 import { lastDayOfMonth, startOfMonth, format, sub } from "date-fns";
 import { ru } from "date-fns/locale";
+import { DatesArray } from "./types";
 
-const now = new Date(2021, 4, 16);
+const now = new Date(2021, 1, 16);
 
 const currentYear = format(new Date(now), "y");
 const genitiveMonth = format(new Date(now), "MMMM", { locale: ru });
@@ -55,17 +56,12 @@ const getAllDates = (prev: any, current: any, next: any) => {
 const datesToRender = getAllDates(prevDates, datesArray, nextMonthDates);
 console.log("datesToRender", datesToRender);
 
-const final: any = [];
+const final: DatesArray[] = [];
 
 for (let i = 0; i < datesToRender.length; i++) {
+  // @ts-ignore
   final.push(datesToRender.splice(0, 7));
 }
-
-// console.log("weekdaynumber", weekDayNumber);
-// console.log("weekDayStartNum", weekDayStartNum);
-// console.log("prevDates", prevDates);
-
-console.log("1111", final);
 
 const App: FC = () => {
   return (
