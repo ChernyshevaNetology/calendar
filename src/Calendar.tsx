@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import cn from "classnames";
 import { weekdays, months } from "./constants";
 
 interface Props {
@@ -7,9 +8,7 @@ interface Props {
   weekDay: string;
   genitiveMonth: string;
   nominativeMonth: string;
-  numberOfDays: string;
-  datesArray: number[];
-  final: number[][];
+  final: { date: number; otherMonth: boolean }[];
 }
 
 const Calendar: FC<Props> = ({
@@ -18,7 +17,6 @@ const Calendar: FC<Props> = ({
   weekDay,
   genitiveMonth,
   nominativeMonth,
-  numberOfDays,
   final,
 }) => {
   return (
@@ -58,44 +56,24 @@ const Calendar: FC<Props> = ({
           </tr>
         </thead>
         <tbody>
-          {final.map((week, i) => {
+          {final.map((week: any, i) => {
+            console.log("week", week);
             return (
               <tr key={i}>
-                {week.map((day, i) => {
+                {week.map((elem: any) => {
+                  const dateClass = cn({
+                    "ui-datepicker-today": elem.date === parseInt(currentDate),
+                    "ui-datepicker-other-month": elem.isCurrentMonth === false,
+                  });
                   return (
-                    <td
-                      key={day}
-                      className={
-                        day === parseInt(currentDate)
-                          ? "ui-datepicker-today"
-                          : ""
-                      }
-                    >
-                      {day}
+                    <td key={elem.date} className={dateClass}>
+                      {elem.date}
                     </td>
                   );
                 })}
               </tr>
             );
           })}
-          {/*<tr>*/}
-          {/*  <td className="ui-datepicker-other-month">27</td>*/}
-          {/*  <td className="ui-datepicker-other-month">28</td>*/}
-          {/*  <td>1</td>*/}
-          {/*  <td>2</td>*/}
-          {/*  <td>3</td>*/}
-          {/*  <td>4</td>*/}
-          {/*  <td>5</td>*/}
-          {/*</tr>*/}
-          {/*<tr>*/}
-          {/*  <td>6</td>*/}
-          {/*  <td>7</td>*/}
-          {/*  <td className="ui-datepicker-today">8</td>*/}
-          {/*  <td>9</td>*/}
-          {/*  <td>10</td>*/}
-          {/*  <td>11</td>*/}
-          {/*  <td>12</td>*/}
-          {/*</tr>*/}
         </tbody>
       </table>
     </div>
