@@ -1,5 +1,5 @@
 # Calendar
 
-This project used date-fns library [Create React App](https://date-fns.org/).
+This project [uses date-fns library](https://date-fns.org/).
 
 [view demo](https://ChernyshevaNetology.github.io/calendar/)
