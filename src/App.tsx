@@ -25,7 +25,10 @@ const weekDayStartNum = parseInt(format(new Date(weekDayStart), "i")) - 1;
 const datesArray = [...new Array(parseInt(numberOfDays) + 1).keys()]
   .slice(1)
   .reduce(
-    (acc: any, date) => [...acc, { date: date, isCurrentMonth: true }],
+    (acc: DatesArray[], date): DatesArray[] => [
+      ...acc,
+      { date: date, isCurrentMonth: true },
+    ],
     []
   );
 
@@ -43,7 +46,7 @@ const prevDates = [...new Array(parseInt(lastDayMonthPrev) + 1).keys()]
 const nextMonthDates = [...new Array(10).keys()]
   .slice(1)
   .reduce(
-    (acc: any, date: number): DatesArray[] => [
+    (acc: DatesArray[], date: number): DatesArray[] => [
       ...acc,
       { date: date, isCurrentMonth: false },
     ],
@@ -73,8 +76,6 @@ const final: DatesArray[][] = [];
 for (let i = 0; i < datesToRender.length; i++) {
   final.push(datesToRender.splice(0, 7));
 }
-
-console.log(final);
 
 const App: FC = () => {
   return (
