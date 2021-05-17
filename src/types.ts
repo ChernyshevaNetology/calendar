@@ -4,10 +4,10 @@ export interface Props {
   weekDay: string;
   genitiveMonth: string;
   nominativeMonth: string;
-  final: DatesArray[];
+  final: DatesArray[][];
 }
 
 export interface DatesArray {
   date: number;
-  otherMonth: boolean;
+  isCurrentMonth: boolean;
 }

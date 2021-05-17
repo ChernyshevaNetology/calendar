@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import cn from "classnames";
-import { weekdays, months } from "./constants";
-import { Props } from "./types";
+import { weekdays } from "./constants";
+import { Props } from "types";
 
 const Calendar: FC<Props> = ({
   currentYear,
@@ -48,24 +48,21 @@ const Calendar: FC<Props> = ({
           </tr>
         </thead>
         <tbody>
-          {final.map((week: any, i) => {
-            console.log("week", week);
-            return (
-              <tr key={i}>
-                {week.map((elem: any) => {
-                  const dateClass = cn({
-                    "ui-datepicker-today": elem.date === parseInt(currentDate),
-                    "ui-datepicker-other-month": elem.isCurrentMonth === false,
-                  });
-                  return (
-                    <td key={elem.date} className={dateClass}>
-                      {elem.date}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
+          {final.map((week, i) => (
+            <tr key={i}>
+              {week.map(({ date, isCurrentMonth }) => {
+                const dateClass = cn({
+                  "ui-datepicker-today": date === parseInt(currentDate),
+                  "ui-datepicker-other-month": !isCurrentMonth,
+                });
+                return (
+                  <td key={date} className={dateClass}>
+                    {date}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

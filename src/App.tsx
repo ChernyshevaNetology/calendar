@@ -3,15 +3,14 @@ import "./App.css";
 import { Calendar } from "./Calendar";
 import { lastDayOfMonth, startOfMonth, format, sub } from "date-fns";
 import { ru } from "date-fns/locale";
-import { DatesArray } from "./types";
+import { DatesArray } from "types";
 
-const now = new Date(2021, 1, 16);
+const now = new Date();
 
 const currentYear = format(new Date(now), "y");
 const genitiveMonth = format(new Date(now), "MMMM", { locale: ru });
 let nominativeMonth = format(new Date(now), "LLLL", { locale: ru });
 const weekDay = format(new Date(now), "eeee", { locale: ru });
-const weekDayNumber = format(new Date(now), "i");
 const currentDate = format(new Date(now), "d");
 const numberOfDays = format(lastDayOfMonth(new Date(now)), "d");
 
@@ -34,18 +33,28 @@ const prevDates = [...new Array(parseInt(lastDayMonthPrev) + 1).keys()]
   .slice(1)
   .splice(-weekDayStartNum)
   .reduce(
-    (acc: any, date: any) => [...acc, { date: date, isCurrentMonth: false }],
+    (acc: DatesArray[], date: number): DatesArray[] => [
+      ...acc,
+      { date: date, isCurrentMonth: false },
+    ],
     []
   );
 
 const nextMonthDates = [...new Array(10).keys()]
   .slice(1)
   .reduce(
-    (acc: any, date) => [...acc, { date: date, isCurrentMonth: false }],
+    (acc: any, date: number): DatesArray[] => [
+      ...acc,
+      { date: date, isCurrentMonth: false },
+    ],
     []
   );
 
-const getAllDates = (prev: any, current: any, next: any) => {
+const getAllDates = (
+  prev: DatesArray[],
+  current: DatesArray[],
+  next: DatesArray[]
+): DatesArray[] => {
   if (weekDayStartNum === 0) {
     return [...current, ...next];
   } else {
@@ -53,15 +62,19 @@ const getAllDates = (prev: any, current: any, next: any) => {
   }
 };
 
-const datesToRender = getAllDates(prevDates, datesArray, nextMonthDates);
-console.log("datesToRender", datesToRender);
+const datesToRender: DatesArray[] = getAllDates(
+  prevDates,
+  datesArray,
+  nextMonthDates
+);
 
-const final: DatesArray[] = [];
+const final: DatesArray[][] = [];
 
 for (let i = 0; i < datesToRender.length; i++) {
-  // @ts-ignore
   final.push(datesToRender.splice(0, 7));
 }
+
+console.log(final);
 
 const App: FC = () => {
   return (
